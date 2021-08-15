@@ -12,9 +12,8 @@
     }
     
     
-    const gridRect = grid.getBoundingClientRect();
-    
     function setAbsoluteGridPos() {
+        const gridRect = grid.getBoundingClientRect();
         absoluteGrid.style.top = gridRect.top + scrollY + 'px';
         absoluteGrid.style.left = gridRect.left + scrollX + 'px';
         absoluteGrid.style.transform = 'rotate(0deg)';
@@ -27,8 +26,9 @@
     let handle = null;
     
     absoluteGrid.addEventListener('click', (event)=> {
-        const x = event.clientX - gridRect.left + scrollX;
-        const y = event.clientY - gridRect.top + scrollY;
+        const gridRect = grid.getBoundingClientRect();
+        const x = event.clientX - gridRect.left;
+        const y = event.clientY - gridRect.top;
         if(!running) {
             running = true;
             handle = rotateDiv(absoluteGrid, x, y);
@@ -45,5 +45,17 @@
             div.style.transformOrigin = `${x}px ${y}px`;
             div.style.transform = `rotate(${z++}deg)`;
         }, 100);
-    }    
+    }
+
+    window.addEventListener('resize', (event)=> {
+        running = false;
+        clearInterval(handle);
+        setAbsoluteGridPos();
+    });
+
+    document.querySelector('#reset').addEventListener('click', (event)=> {
+        running = false;
+        clearInterval(handle);
+        setAbsoluteGridPos();
+    });
 })();
