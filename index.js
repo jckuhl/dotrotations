@@ -4,7 +4,7 @@
     
     for(let i = 0; i < 10000; i++) {
         const div = document.createElement('div');
-        div.classList.add('square');
+        div.classList.add('circle');
         div.classList.add(Math.random() > 0.5 ? 'white' : 'black');
         const div2 = div.cloneNode()
         grid.appendChild(div);
